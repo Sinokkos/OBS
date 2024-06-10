@@ -118,8 +118,8 @@ namespace Online_Book_Store.Data.Services
                 dbBook.ImageURL = data.ImageURL;
                 dbBook.PublicationDate = data.PublicationDate;
                 dbBook.BookCategory = data.BookCategory;
-                dbBook.AuthorId = data.AuthorId;
-                dbBook.PublisherId = data.PublisherId;
+                dbBook.AuthorId = authorId;
+                dbBook.PublisherId = publisherId;
 
                 
             }
