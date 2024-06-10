@@ -1,8 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Online_Book_Store.Data;
 using Online_Book_Store.Data.Interfaces;
+using Online_Book_Store.Data.Services;
 using Online_Book_Store.Models;
+using Online_Book_Store.ViewModel;
 
 namespace Online_Book_Store.Controllers
 {
@@ -19,30 +22,41 @@ namespace Online_Book_Store.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var BooksData = await _service.GetAllAsync();
+            var BooksData = await _service.GetAllAsync(n => n.Author);
             return View(BooksData);
         }
 
         // Create
         // Get :
-        public IActionResult Create() 
-        { 
-           
-          return View();
+        public async Task<IActionResult> Create() 
+        {
+            var bookDropDownsData = await _service.GetNewBookDropdownsValues();
+            ViewBag.Authors = new SelectList(bookDropDownsData.Authors, "Id", "Name");
+
+            ViewBag.Publishers = new SelectList(bookDropDownsData.Publishers, "Id", "Name");
+
+            
+
+            return View();
+            
         }
 
         // Create
         // Post :
         [HttpPost]
-        public async Task<IActionResult> Create([Bind("Id, Name,Author, ImageURL")] Book book)
+        public async Task<IActionResult> Create(NewBookVM book)
         {
             if (!ModelState.IsValid)
             {
+                var bookDropDownsData = await _service.GetNewBookDropdownsValues();
+                ViewBag.Authors = new SelectList(bookDropDownsData.Authors, "Id", "Name");
+
+                ViewBag.Publishers = new SelectList(bookDropDownsData.Publishers, "Id", "Name");
                 return View(book);
             }
 
-            await _service.AddAsync(book);
 
+            await _service.AddNewBookAsync(book);
             return RedirectToAction(nameof(Index));
         }
 
@@ -52,7 +66,7 @@ namespace Online_Book_Store.Controllers
         {
             //var actorDetails = _service.GetById(id);
             // (23)
-            var bookDetails = await _service.GetByIdAsync(id);
+            var bookDetails = await _service.GetBookByIdAsync(id);
 
             if (bookDetails == null) { return View("NotFound"); }
 
@@ -62,24 +76,49 @@ namespace Online_Book_Store.Controllers
         // Get :
         public async Task<IActionResult> Edit(int id)
         {
-            var bookDetails = await _service.GetByIdAsync(id); // var mı/yok mu
+            var bookDetails = await _service.GetBookByIdAsync(id); // var mı/yok mu
 
             if (bookDetails == null) return View("NotFound");
+            var data = new NewBookVM()
+            {
+                Id = bookDetails.Id,
+                Name = bookDetails.Name,
+                Description = bookDetails.Description,
+                Price = bookDetails.Price,
+                PublicationDate = bookDetails.PublicationDate,
+                ImageURL = bookDetails.ImageURL,
+                BookCategory = bookDetails.BookCategory,//
+                AuthorId = bookDetails.AuthorId,
+                PublisherId = bookDetails.PublisherId,
+                
+            };
+            var bookDropDownsData = await _service.GetNewBookDropdownsValues();
+            
+            ViewBag.Authors = new SelectList(bookDropDownsData.Authors, "Id", "Name");
 
-            return View(bookDetails);
+            ViewBag.Publishers = new SelectList(bookDropDownsData.Publishers, "Id", "FullName");
+
+            
+            return View(data);
         }
 
         // Edit
         // Post : Update
         [HttpPost] // View tarafından gönderilecek verileri yakalamak için
-        public IActionResult Edit(int id, [Bind("Id,FullName,ProfilePictureURL,Bio")] Book book)
+        public async Task<IActionResult> Edit(int id, NewBookVM book)
         {
             if (!ModelState.IsValid)
             {
+                var bookDropDownsData = await _service.GetNewBookDropdownsValues();
+
+                ViewBag.Authors = new SelectList(bookDropDownsData.Authors, "Id", "Name");
+
+                ViewBag.Publishers = new SelectList(bookDropDownsData.Publishers, "Id", "FullName");
+
                 return View(book);
             }
 
-            _service.UpdateAsync(id, book); // Servisde çalışacak kısım
+            await _service.UpdateBookAsync(book);
 
             return RedirectToAction(nameof(Index));
 
@@ -101,13 +140,39 @@ namespace Online_Book_Store.Controllers
         [HttpPost, ActionName("Delete")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var bookDetails = _service.GetByIdAsync(id);
+            var bookDetails = _service.GetBookByIdAsync(id);
 
             if (bookDetails == null) return View("NotFound");
 
             await _service.DeleteAsync(id);
 
             return RedirectToAction(nameof(Index));
+
+        }
+
+        public async Task<IActionResult> Filter(string searchString)
+        {
+            // Burası film adı veya Description üzerinde arama kısmı
+
+            // Öncelikle VT Movies tablosundaki tüm kayıtları bir okuyalım
+            var allBooks = await _service.GetAllAsync(n => n.Author, n=> n.Publisher);
+
+            // Searchtext i doldurulmadan da arama butonuna basılmış olabilir. searchString in dolu olup olmadığına bakılıyor
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                // Boş değilse
+
+                var filteredResult = allBooks
+                                .Where(n => n.Name.ToLower()
+                                .Contains(searchString.ToLower()) || n.Description.ToLower().Contains(searchString.ToLower())).ToList();
+
+                return View("Index", filteredResult);
+
+
+            }
+
+            return View("Index", allBooks);
 
         }
     }

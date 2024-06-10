@@ -90,6 +90,9 @@ namespace Online_Book_Store.Data.Services
             return response;
         }
 
-        
+        public Task DeleteBookAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

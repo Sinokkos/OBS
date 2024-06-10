@@ -14,6 +14,8 @@ namespace Online_Book_Store.Data.Interfaces
 
         Task UpdateBookAsync(NewBookVM data);
 
+        Task DeleteBookAsync(int id);
+
         Task<NewBookDropdownsVM> GetNewBookDropdownsValues();
     }
 }

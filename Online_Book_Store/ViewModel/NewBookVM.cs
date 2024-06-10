@@ -31,14 +31,13 @@ namespace Online_Book_Store.ViewModel
         [Required(ErrorMessage = "Kitap basım tarihi gerekli bilgidir...")]
         
         public int PublicationDate { get; set; }
-        // Film türü için
+        // Kitap türü için
 
         [Display(Name = "Select a Category")]
         [Required(ErrorMessage = "Kitap kategorisi gerekli bilgidir...")]
         public BookCategory BookCategory { get; set; }
 
-        // Relations (One-to-Many)
-        // Burası çoktan seçmeli dropdownlist olarak gelecek
+        
         
 
         // Burası çoktan seçmeli dropdownlist olarak gelecek
@@ -46,7 +45,7 @@ namespace Online_Book_Store.ViewModel
         [Required(ErrorMessage = "Yazar bilgisi gereklidir...")]
         public int AuthorId { get; set; }
 
-        // Burası çoktan seçmeli dropdownlist olarak gelecek
+        
         [Display(Name = "Select Publisher")]
         [Required(ErrorMessage = "Yayıncı bilgisi gereklidir...")]
         public int PublisherId { get; set; }

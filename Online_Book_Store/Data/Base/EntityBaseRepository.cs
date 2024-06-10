@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Online_Book_Store.Models;
 using System.Linq.Expressions;
 
@@ -28,14 +29,22 @@ namespace Online_Book_Store.Data.Base
         }
         // Ortak CRUD metotlarını biraraya toplayacağımız class/service gibi çalışcak
         // Yani VT tarafıyla konuşacak kısım
-        public Task AddAsync(T entity)
+        public async Task AddAsync(T entity)
         {
-            throw new NotImplementedException();
+            await _context.Set<T>().AddAsync(entity);
+
+            await _context.SaveChangesAsync();
         }
 
-        public Task DeleteAsync(int id)
+        public async Task DeleteAsync(int id)
         {
-            throw new NotImplementedException();
+            var entity = await _context.Set<T>().FirstOrDefaultAsync(e => e.Id == id);
+
+            EntityEntry entityEntry = _context.Entry<T>(entity);
+
+            entityEntry.State = EntityState.Deleted;
+
+            await _context.SaveChangesAsync();
         }
 
         //public Task<IEnumerable<T>> GetAllAsync(params Expression<Func<T, object>>[] includeProperties)
@@ -43,14 +52,18 @@ namespace Online_Book_Store.Data.Base
         //    throw new NotImplementedException();
         //}
 
-        public Task<T> GetByIdAsync(int id)
+        public async Task<T> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            return await _context.Set<T>().FirstOrDefaultAsync(e => e.Id == id);
         }
 
-        public Task UpdateAsync(int id, T entity)
+        public async Task UpdateAsync(int id, T entity)
         {
-            throw new NotImplementedException();
+            EntityEntry entityEntry = _context.Entry<T>(entity);
+
+            entityEntry.State = EntityState.Modified;
+
+            await _context.SaveChangesAsync();
         }
     }
 }
