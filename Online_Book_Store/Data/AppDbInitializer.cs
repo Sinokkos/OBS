@@ -1,13 +1,15 @@
 ﻿using Online_Book_Store.Models;
 using Online_Book_Store;
 using Online_Book_Store.Data.Enum;
+using Microsoft.AspNetCore.Identity;
+using Online_Book_Store.Data.Static;
 
 namespace Online_Book_Store.Data
-    // Fake dummy
+// Fake dummy
 {
     public class AppDbInitializer
     {
-        public static void Seed(IApplicationBuilder applicationBuilder) 
+        public static void Seed(IApplicationBuilder applicationBuilder)
         {
             using (var serviceScope = applicationBuilder.ApplicationServices.CreateScope())
             {
@@ -16,7 +18,7 @@ namespace Online_Book_Store.Data
                 context.Database.EnsureCreated();
 
                 // Book tablosu için 
-                
+
 
                 if (!context.Authors.Any())
                 {
@@ -40,7 +42,7 @@ namespace Online_Book_Store.Data
                         new Publisher()
                         {
                             Name = "Bloomsbury Childrens Books",
-                            
+
                         },
 
                     });
@@ -118,6 +120,65 @@ namespace Online_Book_Store.Data
 
                     context.SaveChanges();
 
+                }
+            }
+        }
+        public static async Task SeedUsersAndRolesAsync(IApplicationBuilder applicationBuilder)
+        {
+            using (var serviceScope = applicationBuilder.ApplicationServices.CreateScope())
+            {
+                // Roles
+                var roleManager = serviceScope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
+                if (!roleManager.RoleExistsAsync(UserRoles.Admin).Result)
+                {
+                    await roleManager.CreateAsync(new IdentityRole(UserRoles.Admin));
+                }
+
+                if (!roleManager.RoleExistsAsync(UserRoles.User).Result)
+                {
+                    await roleManager.CreateAsync(new IdentityRole(UserRoles.User));
+                }
+
+                // Users
+                var usersManager = serviceScope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+
+                string adminUserEMail = "admin@OBS.com";
+
+                var adminUser = usersManager.FindByEmailAsync(adminUserEMail).Result;
+
+                if (adminUser == null)
+                {
+                    var newAdminUser = new ApplicationUser()
+                    {
+                        FullName = "Admin User",
+                        UserName = "admin-user",
+                        Email = adminUserEMail,
+                        EmailConfirmed = true
+                    };
+                    // * Şifre bir buyuk harf, sayı, özel karakter istiyormuş
+                    await usersManager.CreateAsync(newAdminUser, "S1n3m.");
+
+                    await usersManager.AddToRoleAsync(newAdminUser, UserRoles.Admin);
+                }
+
+                string appUserEMail = "user@OBS.com";
+
+                var appUser = usersManager.FindByEmailAsync(appUserEMail);
+
+                if (appUser == null)
+                {
+                    var newAppUser = new ApplicationUser()
+                    {
+                        FullName = "Application User",
+                        UserName = "app-user",
+                        Email = appUserEMail,
+                        EmailConfirmed = true
+                    };
+
+                    await usersManager.CreateAsync(newAppUser, "S1n3m*");
+
+                    await usersManager.AddToRoleAsync(newAppUser, UserRoles.User);
                 }
             }
         }

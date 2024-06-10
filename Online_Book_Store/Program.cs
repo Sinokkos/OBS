@@ -1,8 +1,11 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Cors.Infrastructure;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Online_Book_Store.Data;
 using Online_Book_Store.Data.Interfaces;
 using Online_Book_Store.Data.Services;
+using Online_Book_Store.Models;
 
 
 internal class Program
@@ -21,9 +24,23 @@ internal class Program
         builder.Services.AddScoped<IBooksService, BooksService>();
         builder.Services.AddScoped<IAuthorsService, AuthorsService>();
         builder.Services.AddScoped<IPublishersService, PublishersService>();
-        
+
+
+        builder.Services
+                .AddIdentity<ApplicationUser, IdentityRole>()
+                .AddEntityFrameworkStores<AppDbContext>();
+        builder.Services.AddMemoryCache();
+        builder.Services.AddSession(); //  68
+        builder.Services.AddAuthentication(options => {
+            options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+        });
+
+
 
         builder.Services.AddControllersWithViews();
+        
+        
+        //
         var app = builder.Build();
 
 
@@ -41,6 +58,9 @@ internal class Program
 
         app.UseRouting();
 
+        // 50
+        app.UseSession(); // 68
+        app.UseAuthentication();
         app.UseAuthorization();
 
         app.MapControllerRoute(
@@ -49,6 +69,13 @@ internal class Program
 
         AppDbInitializer.Seed(app);
 
+        AppDbInitializer.SeedUsersAndRolesAsync(app).Wait();
+
         app.Run();
+
+        
+       
+        
+        
     }
 }

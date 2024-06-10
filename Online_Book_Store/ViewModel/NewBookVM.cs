@@ -43,12 +43,12 @@ namespace Online_Book_Store.ViewModel
         // Burası çoktan seçmeli dropdownlist olarak gelecek
         [Display(Name = "Select Author")]
         [Required(ErrorMessage = "Yazar bilgisi gereklidir...")]
-        public int AuthorId { get; set; }
+        public string AuthorName { get; set; }
 
         
         [Display(Name = "Select Publisher")]
         [Required(ErrorMessage = "Yayıncı bilgisi gereklidir...")]
-        public int PublisherId { get; set; }
+        public string PublisherName { get; set; }
 
     }
 }
