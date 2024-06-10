@@ -12,20 +12,56 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Online_Book_Store</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Books" asp-action="Index">Step06</a>
+                @* Ekran küçültülmesi yapıldığında ortaya çıkacak bir buton(Hamburger button) *@
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
+                @* Üst tarafta görülen menü kısmı *@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
+
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Books" asp-action="Index"><i class="bi bi-film"></i> Books</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
+                        @* Yetkilendirmeye göre buranın açık/kapalı olması *@
+                        @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                        {
+                            @* Dropdown şeklinde menü adımları *@
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="bi bi-gear"></i> Management
+                                </a>
+                                @* Menü adımları *@
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Authors" asp-action="Index"><i class="bi bi-person-square"></i> Authors</a>
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Publishers" asp-action="Index"><i class="bi bi-camera-reels"></i> Publishers</a>
+                                    
+                                </div>
+                            </li>
+                        }
                     </ul>
+
+                    <form class="d-flex" asp-controller="Books" asp-action="Filter">
+                        <input name="searchString" type="text" class="form-control" placeholder="Arama kelimesini giriniz..." aria-label="Recipient's name" aria-describedby="button-addon2" />
+
+                        <span style="padding:5px"></span>
+
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><i class="bi bi-search"></i></button>
+
+                    </form>
+                    @* 71 *@
+                    <ul class="navbar-nav">
+                        @await Component.InvokeAsync("ShoppingCartSummary")
+                    </ul>
+
+
+
+                    <span style="padding:10px"></span>
+                    @* 51 *@
+                    <partial name="_Identity.cshtml" />
+
                 </div>
             </div>
         </nav>
@@ -38,7 +74,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2024 - Online_Book_Store - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2024 - Step06 - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
