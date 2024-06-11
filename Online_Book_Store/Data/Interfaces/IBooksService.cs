@@ -1,7 +1,7 @@
 ﻿using Online_Book_Store.Data.Base;
 using Online_Book_Store.Data.Services;
 using Online_Book_Store.Models;
-using Online_Book_Store.ViewModel;
+using Online_Book_Store.ViewModels;
 
 namespace Online_Book_Store.Data.Interfaces
 {

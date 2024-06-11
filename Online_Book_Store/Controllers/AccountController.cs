@@ -5,7 +5,7 @@ using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.General;
 using Online_Book_Store.Data;
 using Online_Book_Store.Data.Static;
 using Online_Book_Store.Models;
-using Online_Book_Store.ViewModel;
+using Online_Book_Store.ViewModels;
 
 namespace Online_Book_Store.Controllers
 {
