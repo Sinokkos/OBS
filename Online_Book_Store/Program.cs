@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Online_Book_Store.Data;
+using Online_Book_Store.Data.Cart;
 using Online_Book_Store.Data.Interfaces;
 using Online_Book_Store.Data.Services;
 using Online_Book_Store.Models;
@@ -24,6 +25,10 @@ internal class Program
         builder.Services.AddScoped<IBooksService, BooksService>();
         builder.Services.AddScoped<IAuthorsService, AuthorsService>();
         builder.Services.AddScoped<IPublishersService, PublishersService>();
+        builder.Services.AddScoped<IOrderService, OrderService>();
+
+        builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+        builder.Services.AddScoped(sc => ShoppingCart.GetShoppingCart(sc));
 
 
         builder.Services

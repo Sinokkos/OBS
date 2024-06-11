@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<Online_Book_Store.Models.Book>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Books";
 }
 
 <h1>Index</h1>
@@ -67,6 +67,14 @@
                 @Html.DisplayFor(modelItem => item.Publisher.Id)
             </td>
             <td>
+                    <a class="btn btn-success text-white"
+                       asp-controller="Orders"
+                       asp-action="AddItemToShoppingCart"
+                       asp-route-id="@item.Id">
+                        <i class="bi bi-cart-plus"></i> Sepete Ekle (Price @item.Price.ToString("c"))
+
+                    </a>
+
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
@@ -78,4 +86,4 @@
 <div style="position:fixed;right:25px;bottom:25px;" class="text-white">
     <a asp-controller="Books" asp-action="Create" class="btn btn-success"><i class="bi bi-plus-circle"></i> Yeni</a>
 </div>
-
+@Html.Partial("_CreateItem", "Books")
