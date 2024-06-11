@@ -1,6 +1,6 @@
 ﻿using Online_Book_Store.Models;
 
-namespace Online_Book_Store.ViewModel
+namespace Online_Book_Store.ViewModels
 {
     public class NewBookDropdownsVM
     {

@@ -26,6 +26,7 @@ namespace Online_Book_Store.Data
 
         public DbSet<ShoppingCartItem> ShoppingCartItems { get; set; }
 
+        public DbSet<Online_Book_Store.ViewModels.NewBookVM> NewBookVMs { get; set; } = default!;
 
     }
 }
