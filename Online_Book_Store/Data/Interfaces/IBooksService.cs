@@ -16,6 +16,13 @@ namespace Online_Book_Store.Data.Interfaces
 
         Task DeleteBookAsync(int id);
 
+        Task<int> GetPublisher(string publisherName);
+        Task<string> GetPublisher(int publisherId);
+        Task<string> GetAuthor(int authorId);
+        Task<int> GetAuthor(string authorName);
+
+
+
         Task<NewBookDropdownsVM> GetNewBookDropdownsValues();
     }
 }

@@ -41,18 +41,18 @@
             </div>
             <div class="form-group">
                 <label asp-for="BookCategory" class="control-label"></label>
-                <select asp-for="BookCategory" class="form-control"></select>
+                <select asp-for="BookCategory" class="form-control">asp-items="Html.GetEnumSelectList<MovieCategory>()"></select>
                 <span asp-validation-for="BookCategory" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="AuthorId" class="control-label"></label>
-                <select asp-for="AuthorId" class="form-control" asp-items="ViewBag.AuthorId"></select>
-                <span asp-validation-for="AuthorId" class="text-danger"></span>
+                <label asp-for="AuthorName" class="control-label"></label>
+                <select asp-for="AuthorName" class="form-control" asp-items="ViewBag.AuthorId"></select>
+                <span asp-validation-for="AuthorName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="PublisherId" class="control-label"></label>
-                <select asp-for="PublisherId" class="form-control" asp-items="ViewBag.PublisherId"></select>
-                <span asp-validation-for="PublisherId" class="text-danger"></span>
+                <label asp-for="PublisherName" class="control-label"></label>
+                <select asp-for="PublisherName" class="form-control" asp-items="ViewBag.PublisherId"></select>
+                <span asp-validation-for="PublisherName" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />

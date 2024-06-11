@@ -32,59 +32,8 @@ namespace Online_Book_Store.Data.Services
 
         public async Task AddNewBookAsync(NewBookVM data)
         {
-            int authorId = 0;
-            var authors = _context.Authors.ToList();
-            string spaceAuthor = Regex.Replace(data.AuthorName, @"\s+", "").ToLower();
-
-            foreach (var author in authors)
-            {
-                if (Regex.Replace(author.Name, @"\s+", "").ToLower() == spaceAuthor)
-                {
-                    authorId = author.Id;
-                    break;
-                }
-            }
-            if (authorId == 0)
-            {
-                await _context.Authors.AddAsync(new Author()
-                {
-                    Name = data.AuthorName,
-                    ImageURL = "https://www.google.com/imgres?q=empty%20profile%20picture&imgurl=https%3A%2F%2Fwww.pikpng.com%2Fpngl%2Fm%2F80-805068_my-profile-icon-blank-profile-picture-circle-clipart.png&imgrefurl=https%3A%2F%2Fwww.pikpng.com%2Fpngvi%2FbJoTbo_my-profile-icon-blank-profile-picture-circle-clipart%2F&docid=AbBxfjxuwCmNiM&tbnid=mam3ybpF12JCRM&vet=12ahUKEwiqnImn69CGAxUzVvEDHXkkB_AQM3oECB4QAA..i&w=840&h=681&hcb=2&ved=2ahUKEwiqnImn69CGAxUzVvEDHXkkB_AQM3oECB4QAA"
-
-                });
-                await _context.SaveChangesAsync();
-                var author = await _context.Authors
-                    .OrderBy(c => c.Id)
-                    .LastOrDefaultAsync();
-                authorId = author.Id;
-            }
-
-            int publisherId = 0;
-            var publishers = _context.Authors.ToList();
-            string spacePublisher = Regex.Replace(data.PublisherName, @"\s+", "").ToLower();
-
-            foreach (var publisher in publishers)
-            {
-                if (Regex.Replace(publisher.Name, @"\s+", "").ToLower() == spacePublisher)
-                {
-                    authorId = publisher.Id;
-                    break;
-                }
-            }
-            if (publisherId == 0)
-            {
-                await _context.Publishers.AddAsync(new Publisher()
-                {
-                    Name = data.PublisherName,
-                    
-
-                });
-                await _context.SaveChangesAsync();
-                var publisher = await _context.Publishers
-                    .OrderBy(c => c.Id)
-                    .LastOrDefaultAsync();
-                authorId = publisher.Id;
-            }
+                       
+            
             // Önce Book data oluşturuluyor.
             var newBook = new Book()
             {
@@ -93,8 +42,8 @@ namespace Online_Book_Store.Data.Services
                 Price = data.Price,
                 ImageURL = data.ImageURL,
                 PublicationDate = data.PublicationDate,
-                AuthorId = authorId,
-                PublisherId = publisherId,
+                AuthorId = await GetAuthor(data.AuthorName),
+                PublisherId = await GetPublisher(data.PublisherName),
                 BookCategory = data.BookCategory
             };
 
@@ -118,8 +67,8 @@ namespace Online_Book_Store.Data.Services
                 dbBook.ImageURL = data.ImageURL;
                 dbBook.PublicationDate = data.PublicationDate;
                 dbBook.BookCategory = data.BookCategory;
-                dbBook.AuthorId = authorId;
-                dbBook.PublisherId = publisherId;
+                dbBook.AuthorId = await GetAuthor(data.AuthorName);
+                dbBook.PublisherId = await GetPublisher(data.PublisherName);
 
                 
             }
@@ -147,6 +96,66 @@ namespace Online_Book_Store.Data.Services
         public Task DeleteBookAsync(int id)
         {
             throw new NotImplementedException();
+        }
+        public async Task<int> GetAuthor(string authorName)
+        {
+            var authors = await _context.Authors.ToListAsync();
+            var author = authors.FirstOrDefault(
+                c => Regex.Replace(c.Name, @"\s+", "").ToLower() == Regex.Replace(authorName, @"\s+", "").ToLower());
+            if (author == null)
+            {
+                await _context.Authors.AddAsync(new Author()
+                {
+                    Name = authorName,
+                    ImageURL = "",
+                    
+                });
+                await _context.SaveChangesAsync();
+                author = await _context.Authors
+                    .OrderBy(c => c.Id)
+                    .LastOrDefaultAsync();
+                return author.Id;
+            }
+            return author.Id;
+
+        }
+
+        public async Task<string> GetAuthor(int authorId)
+        {
+            string authorName;
+            var authors = await _context.Authors.ToListAsync();
+            authorName = authors.FirstOrDefault(c => c.Id == authorId).Name;
+            return authorName;
+        }
+        public async Task<int> GetPublisher(string publisherName)
+        {
+            var publishers = await _context.Publishers.ToListAsync();
+            var publisher = publishers.FirstOrDefault(
+                c => Regex.Replace(c.Name, @"\s+", "").ToLower() == Regex.Replace(publisherName, @"\s+", "").ToLower());
+            if (publisher == null)
+            {
+                await _context.Authors.AddAsync(new Author()
+                {
+                    Name = publisherName,
+                    ImageURL = "",
+
+                });
+                await _context.SaveChangesAsync();
+                publisher = await _context.Publishers
+                    .OrderBy(c => c.Id)
+                    .LastOrDefaultAsync();
+                return publisher.Id;
+            }
+            return publisher.Id;
+
+        }
+
+        public async Task<string> GetPublisher(int publisherId)
+        {
+            string publisherName;
+            var publishers = await _context.Authors.ToListAsync();
+            publisherName = publishers.FirstOrDefault(c => c.Id == publisherId).Name;
+            return publisherName;
         }
     }
 }

@@ -88,8 +88,8 @@ namespace Online_Book_Store.Controllers
                 PublicationDate = bookDetails.PublicationDate,
                 ImageURL = bookDetails.ImageURL,
                 BookCategory = bookDetails.BookCategory,//
-                AuthorId = bookDetails.AuthorId,
-                PublisherId = bookDetails.PublisherId,
+                AuthorName = await _service.GetAuthor(bookDetails.AuthorId),
+                PublisherName = await _service.GetPublisher(bookDetails.PublisherId),
                 
             };
             var bookDropDownsData = await _service.GetNewBookDropdownsValues();
