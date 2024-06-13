@@ -130,7 +130,7 @@ namespace Online_Book_Store.Data
                          new Book()
                          {
                              Name = " The Kite Runner",
-                             ImageURL= "https://m.media-amazon.com/images/I/71x36Ete2eL._SY466_.jpg",
+                             ImageURL= "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1328756527i/2203766.jpg",
                              Description="Göklere...",
                              Price= 150,
                              PublicationDate= 2007,
@@ -142,7 +142,7 @@ namespace Online_Book_Store.Data
                          new Book()
                          {
                              Name = "Le Petit Prince",
-                             ImageURL= "https://i.ebayimg.com/images/g/rgkAAOSw969f~26A/s-l500.jpg",
+                             ImageURL= "https://m.media-amazon.com/images/I/710wth0vXZL._AC_UF894,1000_QL80_.jpg",
                              Description="Bazen Tilkiler En İyi Arkadaşınızdır...",
                              Price= 300,
                              PublicationDate= 1943,
