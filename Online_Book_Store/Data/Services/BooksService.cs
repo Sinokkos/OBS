@@ -134,10 +134,10 @@ namespace Online_Book_Store.Data.Services
                 c => Regex.Replace(c.Name, @"\s+", "").ToLower() == Regex.Replace(publisherName, @"\s+", "").ToLower());
             if (publisher == null)
             {
-                await _context.Authors.AddAsync(new Author()
+                await _context.Publishers.AddAsync(new Publisher()
                 {
                     Name = publisherName,
-                    ImageURL = "",
+                    
 
                 });
                 await _context.SaveChangesAsync();

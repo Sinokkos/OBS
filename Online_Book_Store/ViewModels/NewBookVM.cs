@@ -5,9 +5,6 @@ namespace Online_Book_Store.ViewModels
 {
     public class NewBookVM
     {
-        // Yeni bir film yaratmak istediğimde kullanacağım model.
-        // Movie modeline benzer şekilde CreateView tarafında kullanabilmek için
-
         [Key]
         public int Id { get; set; }
 

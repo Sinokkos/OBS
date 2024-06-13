@@ -16,7 +16,7 @@ namespace Online_Book_Store.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            var PublishersData= _service.GetAllAsync();
+            var PublishersData= await _service.GetAllAsync();
             return View(PublishersData);
         }
 

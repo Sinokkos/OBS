@@ -87,7 +87,7 @@ namespace Online_Book_Store.Controllers
                 Price = bookDetails.Price,
                 PublicationDate = bookDetails.PublicationDate,
                 ImageURL = bookDetails.ImageURL,
-                BookCategory = bookDetails.BookCategory,//
+                BookCategory = bookDetails.BookCategory,
                 AuthorName = await _service.GetAuthor(bookDetails.AuthorId),
                 PublisherName = await _service.GetPublisher(bookDetails.PublisherId),
                 
@@ -96,7 +96,7 @@ namespace Online_Book_Store.Controllers
             
             ViewBag.Authors = new SelectList(bookDropDownsData.Authors, "Id", "Name");
 
-            ViewBag.Publishers = new SelectList(bookDropDownsData.Publishers, "Id", "FullName");
+            ViewBag.Publishers = new SelectList(bookDropDownsData.Publishers, "Id", "Name");
 
             
             return View(data);
@@ -113,7 +113,7 @@ namespace Online_Book_Store.Controllers
 
                 ViewBag.Authors = new SelectList(bookDropDownsData.Authors, "Id", "Name");
 
-                ViewBag.Publishers = new SelectList(bookDropDownsData.Publishers, "Id", "FullName");
+                ViewBag.Publishers = new SelectList(bookDropDownsData.Publishers, "Id", "Name");
 
                 return View(book);
             }

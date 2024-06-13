@@ -1,4 +1,5 @@
-﻿@model Online_Book_Store.Models.Book
+﻿@model Online_Book_Store.ViewModels.NewBookVM
+@using Online_Book_Store.Data.Enum;
 
 @{
     ViewData["Title"] = "Create";
@@ -38,19 +39,30 @@
                 <span asp-validation-for="PublicationDate" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Category" class="control-label"></label>
-                <select asp-for="Category" class="form-control"></select>
-                <span asp-validation-for="Category" class="text-danger"></span>
+                <label asp-for="BookCategory" class="control-label"></label>
+                <select asp-for="BookCategory" class="form-control" asp-items="Html.GetEnumSelectList<BookCategory>()"></select>
+                <span asp-validation-for="BookCategory" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="AuthorId" class="control-label"></label>
-                <select asp-for="Author" class ="form-control"></select>
-                <span asp-validation-for="Name" class="text-danger"></span>
+                <label asp-for="AuthorName" class="control-label"></label>
+                <input asp-for="AuthorName" class="form-control" list="authors" />
+                <span asp-validation-for="AuthorName" class="text-danger"></span>
+                <datalist id="authors">
+                    @foreach (var author in ViewBag.Authors)
+                    {
+                        <option value="@author.Text"></option>
+                    }
+                </datalist>
             </div>
             <div class="form-group">
-                <label asp-for="PublisherId" class="control-label"></label>
-                <select asp-for="PublisherId" class ="form-control" asp-items="ViewBag.Publishers"></select>
-                <span asp-validation-for="Name" class="text-danger"></span>
+                <label asp-for="PublisherName" class="control-label"></label>
+                <input asp-for="PublisherName" class="form-control" list="publishers" />
+                <span asp-validation-for="PublisherName" class="text-danger"></span>
+                <datalist id="publishers">
+                    @foreach (var publisher in ViewBag.Publishers)
+                    {
+                        <option value="@publisher.Text"></option>
+                    }
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

@@ -15,11 +15,11 @@ internal class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
-        // Add services to the container.
+       
         builder.Services.AddControllersWithViews();
 
 
-        // VT için gerekli olan AppDbContext tanýmý yapýlýyor.
+        
         builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("Connection")));
 
         builder.Services.AddScoped<IBooksService, BooksService>();
