@@ -7,12 +7,15 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Online_Book_Store.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
+    @* <audio src="~/Chopin - Spring Waltz (Mariage dAmour) [Please Read Description].mp3" autoplay loop>  </audio> *@
 </head>
 <body>
+   
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Books" asp-action="Index">Online_Book_Stopre</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Books" asp-action="Index">Online_Book_Store</a>
                 @* Ekran küçültülmesi yapıldığında ortaya çıkacak bir buton(Hamburger button) *@
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
@@ -23,7 +26,7 @@
                     <ul class="navbar-nav flex-grow-1">
 
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Books" asp-action="Index"><i class="bi bi-film"></i> Books</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Books" asp-action="Index"><i class="bi bi-book"></i> Books</a>
                         </li>
                         @* Yetkilendirmeye göre buranın açık/kapalı olması *@
                         @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
@@ -36,7 +39,7 @@
                                 @* Menü adımları *@
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Authors" asp-action="Index"><i class="bi bi-person-square"></i> Authors</a>
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Publishers" asp-action="Index"><i class="bi bi-camera-reels"></i> Publishers</a>
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Publishers" asp-action="Index"><i class="bi bi-book publisher"></i> Publishers</a>
                                     
                                 </div>
                             </li>

@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<Online_Book_Store.Models.Book>
+<
 
 @{
     ViewData["Title"] = "Books";
@@ -44,7 +45,7 @@
                         <div class="card-body">
                             <p class="card-text">@item.Description</p>
                             <p class="card-text"><b>Author:</b>@item.Author.Name</p>
-                            <p class="card-text"><b>Category:</b>@item.BookCategory</p>
+                            <p class="card-text"><b>Category:</b>@item.BookCategory </p>
                             <p class="card-text"><b>PublicationDate:</b>@item.PublicationDate</p>
                             
                         </div>
@@ -54,7 +55,7 @@
                             <p class="card-text">
                                 @* Ternary Operator *@
                                 @* 69 *@
-                                <a class="btn btn-success text-white 
+                                <a class="btn btn-success text-white" 
                                    asp-controller="Orders"
                                    asp-action="AddItemToShoppingCart"
                                    asp-route-id="@item.Id">

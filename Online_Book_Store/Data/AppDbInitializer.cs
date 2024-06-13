@@ -3,6 +3,8 @@ using Online_Book_Store;
 using Online_Book_Store.Data.Enum;
 using Microsoft.AspNetCore.Identity;
 using Online_Book_Store.Data.Static;
+using Humanizer;
+using System.Drawing;
 
 namespace Online_Book_Store.Data
 // Fake dummy
@@ -30,6 +32,32 @@ namespace Online_Book_Store.Data
                             ImageURL="https://n24.com.tr/wp-content/uploads/2023/04/Harry-Potter-JK-Rowling.jpg",
                         },
 
+                        new Author()
+                        {
+                            Name = "Stephen King",
+                            ImageURL="https://cdn.britannica.com/20/217720-050-857D712B/American-novelist-Stephen-King-2004.jpg",
+                        },
+
+                        new Author()
+                        {
+                            Name = "Khaled Hosseini",
+                            ImageURL="https://images.405magazine.com/wp-content/uploads/2022/02/Khaled-Hosseini.jpg",
+                        },
+
+                        new Author()
+                        { 
+                          Name = "fyodor dostoevsky",
+                          ImageURL ="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTM5DwJbs6tyoRFAlkfrcw7eDBAH21OcXi9ag&s"
+                        },
+
+                        new Author()
+                        {
+                          Name = "antoine de saint-exupéry",
+                          ImageURL ="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR4Vyu51FC-Dry8c6JFTnfG8XzfBAoVPzVfvg&s"
+                        },
+
+                        
+
                     });
 
                     context.SaveChanges();
@@ -43,7 +71,26 @@ namespace Online_Book_Store.Data
                         {
                             Name = "Bloomsbury Childrens Books",
 
+
                         },
+
+                        new Publisher()
+                        { 
+                           Name = "Altın Kitaplar"
+                        
+                        },
+
+                        new Publisher()
+                        { 
+                          Name = "Engage Classics"
+                        },
+
+                        new Publisher()
+                        {
+                          Name = "Harcourt, Inc."
+                        }
+
+                       
 
                     });
 
@@ -60,7 +107,7 @@ namespace Online_Book_Store.Data
                              Name = "Harry Potter philosopher's stone",
                              ImageURL= "https://m.media-amazon.com/images/I/81q77Q39nEL._AC_UF894,1000_QL80_.jpg",
                              Description="Büyülendiniz...",
-                             Price= 200,
+                             Price= 100,
                              PublicationDate= 1997,
                              Category= BookCategory.Fantasy,
                              AuthorId= 1,
@@ -71,48 +118,48 @@ namespace Online_Book_Store.Data
                          {
                              Name = "IT",
                              ImageURL= "https://i.ebayimg.com/images/g/rgkAAOSw969f~26A/s-l500.jpg",
-                             Description="Büyülendiniz...",
-                             Price= 200,
-                             PublicationDate= 1997,
+                             Description="Balonlara Dikkat",
+                             Price= 400,
+                             PublicationDate= 200,
                              Category= BookCategory.Horror,
-                             AuthorId= 1,
-                             PublisherId= 1,
+                             AuthorId= 2,
+                             PublisherId= 2,
                          },
 
 
                          new Book()
                          {
-                             Name = "Harry Potter philosopher's stone",
-                             ImageURL= "https://m.media-amazon.com/images/I/81q77Q39nEL._AC_UF894,1000_QL80_.jpg",
-                             Description="Büyülendiniz...",
-                             Price= 200,
-                             PublicationDate= 1997,
+                             Name = " The Kite Runner",
+                             ImageURL= "https://m.media-amazon.com/images/I/71x36Ete2eL._SY466_.jpg",
+                             Description="Göklere...",
+                             Price= 150,
+                             PublicationDate= 2007,
                              Category= BookCategory.Drama,
-                             AuthorId= 1,
+                             AuthorId= 3,
                              PublisherId= 1,
                          },
 
                          new Book()
                          {
-                             Name = "IT",
+                             Name = "Le Petit Prince",
                              ImageURL= "https://i.ebayimg.com/images/g/rgkAAOSw969f~26A/s-l500.jpg",
-                             Description="Büyülendiniz...",
-                             Price= 200,
-                             PublicationDate= 1997,
-                             Category= BookCategory.Education,
+                             Description="Bazen Tilkiler En İyi Arkadaşınızdır...",
+                             Price= 300,
+                             PublicationDate= 1943,
+                             Category= BookCategory.Kids,
                              AuthorId= 1,
-                             PublisherId= 1,
+                             PublisherId= 4,
                          },
                          new Book()
                          {
-                             Name = "IT",
-                             ImageURL= "https://i.ebayimg.com/images/g/rgkAAOSw969f~26A/s-l500.jpg",
+                             Name = "Crime and Punishment",
+                             ImageURL= "https://m.media-amazon.com/images/I/71muc07-IPL._SY466_.jpg",
                              Description="Büyülendiniz...",
-                             Price= 200,
-                             PublicationDate= 1997,
-                             Category= BookCategory.Fantasy,
+                             Price= 75,
+                             PublicationDate= 1866,
+                             Category= BookCategory.Literature,
                              AuthorId= 1,
-                             PublisherId= 1,
+                             PublisherId= 4,
                          }
 
 

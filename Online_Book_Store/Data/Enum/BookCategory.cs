@@ -3,8 +3,8 @@
     public enum BookCategory
     {
         Horror =1,      
-        Education,
-        Music,
+        Literature,
+        Kids,
         Fantasy,
         Drama
 
