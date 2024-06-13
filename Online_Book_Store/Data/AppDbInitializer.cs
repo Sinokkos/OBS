@@ -130,7 +130,7 @@ namespace Online_Book_Store.Data
                          new Book()
                          {
                              Name = " The Kite Runner",
-                             ImageURL= "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1328756527i/2203766.jpg",
+                             ImageURL= "https://m.media-amazon.com/images/I/81IzbD2IiIL._AC_UF1000,1000_QL80_.jpg",
                              Description="Göklere...",
                              Price= 150,
                              PublicationDate= 2007,
